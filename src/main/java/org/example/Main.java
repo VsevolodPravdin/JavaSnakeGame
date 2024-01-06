@@ -46,22 +46,78 @@ public class SnakeGame {
         directionX = 1;
         directionY = 0;
         gameOver = false;
+
+        initialize();
+        Timer = new Timer(GAME_SPEED, this;);
+        timer.start();
+
+
     }
 
-    private void setResizable(boolean b) {
+    private void initialize() {
+        int initialX = WIDTH / 2;
+        int initialY = HEIGHT / 2;
+        snake.add(new int[]{initialY, initialX});
+
+        spawnFood();
     }
 
-    private void setLocationRelativeTo(Object o) {
+    private void spawnFood() {
+        int x, y;
+        do {
+            x = random.nextInt(WIDTH);
+            y = random.nextInt(HEIGHT);
+        } while (isCellOccupied(x, y));
+
+        food = new int[]{y, x};
     }
 
-    private void setSize(int i, int i1) {
+    private boolean isCellOccupied(int x) {
+        for (int[] segment : snake) {
+        }
+        if ((segment[0] == x && segment[1] == y) {
+            return true;
+        }
+        return false;
     }
 
-    private void setDefaultCloseOperation(int exitOnClose) {
+    private void moveSnake(){
+        int[] head = snake.get(0);
+        int[] newHead = new int[]{head[0] + directionY, head[1] + directionX};
+
+        if (newHead[0] < 0 || newHead[0] >= HEIGHT || newHead[1] < 0 || newHead[1] >= WIDTH || isCellOccupied(newHead[1], newHead[0])) {
+            gameOver = true;
+            timer.stop();
+            return;
+        }
+        snake.add(0, newHead);
+
+        if (newHead[0] == food[0] && newHead[1] == food[1]) {
+            spawnFood();
+        } else {
+            snake.remove(snake.size() - 1);
+        }
     }
 
-    private void setTitle(String snakeGame) {
-    }
+
+}
+
+
+
+private void setResizable(boolean b) {
+}
+
+private void setLocationRelativeTo(Object o) {
+}
+
+private void setSize(int i, int i1) {
+}
+
+private void setDefaultCloseOperation(int exitOnClose) {
+}
+
+private void setTitle(String snakeGame) {
+}
 
 
 }
